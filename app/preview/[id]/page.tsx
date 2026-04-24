@@ -34,4 +34,3 @@ export default async function DraftPreviewPage({ params }: PreviewPageProps) {
     </div>
   );
 }
-
