@@ -1,0 +1,17 @@
+buatkan issue.md yang berisi perencanaaan untuk nanti di implementasikan oleh junior programmer atau ai model yang lebih murah.
+
+isi dari planning nya adalah:
+
+- buat agar semua tombol nya mempunyai hover effect nya lebih responsive dan cursor pointer (pada halaman depan dan halaman dashboard serta halaman generate page)
+
+*Halaman dashboard:
+- pada halaman dashboard, ketika tombol logout di klik, berikan alert custom yang menarik, dan juga harus ada loading effect nya (contoh: logout..., atau icon loading) dan saat proses logout selesai, user harus keluar dari dashboard
+
+*Halaman generate page:
+- pada halaman generate page, ubah warna progres bar nya sesuai karakter warna ai, berikan warna pada progres yang sedang berjalan dan berikan outline saja pada progres yang belum berjalan.
+- pada halaman generate page ubah back to dashboard menjadi tombol.
+- ubah juga warna tombol nya menjadi (#252525).
+
+jelaskan tahapan-tahapan yang harus dilakukan untuk mengimplementasikan fitur ini, anggap nanti yang mengimplementasikan adalah junior programmer atau ai model yang lebih murah.
+
+dengan bahasa yang santai dan mudah dipahami oleh junior programmer atau ai model yang lebih murah tersebut.

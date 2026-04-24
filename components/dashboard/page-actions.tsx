@@ -92,13 +92,16 @@ export function PageActions({ id, isPublished }: PageActionsProps) {
   return (
     <>
       <div className="flex items-center gap-2 text-sm">
-        <a href={`/preview/${id}`} className="rounded-md border border-white/10 px-3 py-1 transition hover:bg-zinc-700">
+        <a
+          href={`/preview/${id}`}
+          className="rounded-md border border-white/10 px-3 py-1 transition-all duration-200 hover:scale-105 active:scale-95 cursor-pointer hover:bg-zinc-700"
+        >
           Preview
         </a>
         <button
           onClick={onCopyPublicLink}
           disabled={!isPublished}
-          className="rounded-md border border-white/10 px-3 py-1 transition hover:bg-zinc-700 disabled:cursor-not-allowed disabled:opacity-50"
+          className="rounded-md border border-white/10 px-3 py-1 transition-all duration-200 hover:scale-105 active:scale-95 cursor-pointer hover:bg-zinc-700 disabled:cursor-not-allowed disabled:opacity-50"
           type="button"
           title={isPublished ? "Copy public link" : "Publish first to share publicly"}
         >
@@ -107,7 +110,7 @@ export function PageActions({ id, isPublished }: PageActionsProps) {
         <button
           onClick={onTogglePublish}
           disabled={isPending}
-          className="rounded-md border border-white/10 px-3 py-1 transition hover:bg-zinc-700 disabled:opacity-60"
+          className="rounded-md border border-white/10 px-3 py-1 transition-all duration-200 hover:scale-105 active:scale-95 cursor-pointer hover:bg-zinc-700 disabled:opacity-60"
           type="button"
         >
           {isPublished ? "Unpublish" : "Publish"}
@@ -115,7 +118,7 @@ export function PageActions({ id, isPublished }: PageActionsProps) {
         <button
           onClick={() => setIsDeleteModalOpen(true)}
           disabled={isPending}
-          className="rounded-md border border-red-400/40 px-3 py-1 text-red-400 transition hover:bg-red-900/30 disabled:opacity-60"
+          className="rounded-md border border-red-400/40 px-3 py-1 text-red-400 transition-all duration-200 hover:scale-105 active:scale-95 cursor-pointer hover:bg-red-900/30 disabled:opacity-60"
           type="button"
         >
           Delete

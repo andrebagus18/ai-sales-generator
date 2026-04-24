@@ -1,251 +1,91 @@
-# 🐛 Bug Report — AI Sales Generator
+# 🚀 Enhancement Plan: UI Polish & Better UX
 
-> **Tanggal Pengujian:** 24 April 2026  
-> **Versi Next.js:** 16.2.4  
-> **Tester:** Automated E2E via Browser Agent  
-> **Status:** 4 bug ditemukan, 1 sudah diperbaiki saat testing
+Halo tim! (Atau AI asisten yang sedang bertugas 👋)
 
----
+Kita punya beberapa tugas *enhancement* (peningkatan fitur) untuk membuat UI aplikasi kita terasa lebih hidup, interaktif, dan modern. Jangan khawatir, ini mayoritas urusan *styling* Tailwind CSS dan sedikit penambahan *state* di React. 
 
-## Ringkasan Pengujian
-
-| Tahapan | Status | Catatan |
-|---------|--------|---------|
-| Register user baru | ✅ Berhasil | User `testuser_april24@example.com` berhasil dibuat |
-| Login otomatis setelah register | ✅ Berhasil | Redirect ke `/dashboard` |
-| Generator form (3 step) | ✅ Berhasil | Form validation & navigasi bekerja |
-| AI Generation | ⚠️ Gagal lalu berhasil | Gagal 3x karena model deprecated, berhasil setelah fix |
-| Dashboard list | ✅ Berhasil | Sales page muncul di dashboard |
-| Publish toggle | ✅ Berhasil | Status berubah dari Draft → Published |
-| Preview page (`/preview/[id]`) | ⚠️ Bug visual | Heading nyaris tidak terlihat |
-| Public page (`/p/[id]`) | ⚠️ Bug visual | Heading nyaris tidak terlihat + markdown mentah |
-| Copy Link | ✅ Berhasil | Link disalin ke clipboard |
-| Delete | ✅ Berhasil | Sales page terhapus |
+Berikut adalah daftar pekerjaan yang perlu dieksekusi. Tolong kerjakan secara berurutan ya!
 
 ---
 
-## BUG #1 — Model AI Deprecated (CRITICAL) ✅ SUDAH DIPERBAIKI
+## 🎯 Task 1: Bikin Semua Tombol Lebih "Hidup" (Global)
 
-### Deskripsi
-Model `gemini-1.5-flash` sudah deprecated dan tidak tersedia lagi di API Google Generative AI. Saat user mencoba generate sales page, muncul error:
+**Masalah:** Beberapa tombol saat ini terasa kaku saat di-*hover* dan kadang *cursor* mouse-nya belum berubah jadi bentuk tangan (*pointer*).
+**Goal:** Pastikan semua elemen yang bisa diklik punya efek hover yang *smooth* (misalnya sedikit membesar atau berubah warna) dan pastikan kursornya jadi pointer.
 
-> "Generation failed: Failed after 3 attempts. Last error: This model is currently experiencing high demand."
+**Langkah-langkah Eksekusi:**
+1. **Cek Halaman Depan (`app/page.tsx`):**
+   - Cari tombol seperti "Get Started" atau link login dan Register.
+   - Pastikan ada class `cursor-pointer`.
+   - Tambahkan class animasi seperti `transition-all duration-200 hover:scale-105 active:scale-95` agar tombol membesar sedikit saat di-hover dan mengecil saat diklik.
 
-### Akar Masalah
-File `lib/ai.ts` baris 40 menggunakan model lama:
-```typescript
-model: google("gemini-1.5-flash"), // ❌ Deprecated
-```
+2. **Cek Halaman Dashboard (`app/dashboard/page.tsx` & `components/dashboard/page-actions.tsx`):**
+   - Terapkan efek transisi yang serupa pada tombol "New Page", "Preview", "Copy Link", dll.
+   - Pastikan semua punya class `cursor-pointer`.
 
-### Perbaikan yang Sudah Dilakukan
-```diff
-- model: google("gemini-1.5-flash"),
-+ model: google("gemini-2.5-flash"),
-```
-
-### File yang Diubah
-- `lib/ai.ts` — baris 40
+3. **Cek Halaman Generate (`app/generator/page.tsx`):**
+   - Pastikan tombol "Next", "Back", "Generate" punya hover state yang jelas dan `cursor-pointer`.
 
 ---
 
-## BUG #2 — Heading Tidak Terlihat di Public/Preview Page (HIGH)
+## 🎯 Task 2: Animasi Logout di Dashboard
 
-### Deskripsi
-Heading "The Problem", "What You Get", dan "FAQ" di halaman public (`/p/[id]`) dan preview (`/preview/[id]`) nyaris **tidak terlihat** karena warna teks hampir sama dengan background.
+**Masalah:** Saat ini kalau tombol Logout diklik, user langsung terlempar keluar begitu saja (atau mungkin loadingnya nggak kelihatan). Kita ingin UX-nya lebih manis.
+**Goal:** Tampilkan *custom alert* atau indikator loading saat proses logout berlangsung.
 
-### Screenshot Bug
-Perhatikan heading "The Problem" dan "What You Get" yang nyaris tidak terlihat (warna sangat pucat):
-
-### Akar Masalah
-Ada konflik antara global CSS dan desain halaman public:
-
-1. **`app/globals.css`** mengatur warna teks body menjadi terang untuk dark theme:
-   ```css
-   body {
-     color: var(--foreground); /* = #f5f5f5 (putih/terang) */
-   }
+**Langkah-langkah Eksekusi:**
+1. Buka komponen yang meng-handle tombol logout (biasanya di `components/dashboard/dashboard-navbar.tsx` atau sejenisnya).
+2. Buat *state* baru menggunakan `useState`: 
+   ```javascript
+   const [isLoggingOut, setIsLoggingOut] = useState(false);
    ```
-
-2. **`app/p/[id]/page.tsx`** menggunakan background terang:
-   ```tsx
-   <main className="bg-gradient-to-b from-white via-zinc-50 to-zinc-100">
+3. Ubah fungsi onClick pada tombol logout menjadi seperti ini:
+   - Set `setIsLoggingOut(true)`.
+   - Jalankan fungsi `signOut({ callbackUrl: '/' })`.
+4. Di bagian render tombol (JSX), ubah teks/icon tombol secara dinamis:
+   ```jsx
+   <button disabled={isLoggingOut} onClick={handleLogout} className="...">
+     {isLoggingOut ? (
+       <span className="flex items-center gap-2">
+         <svg className="animate-spin h-4 w-4 ..." /* icon spinner tailwind */ />
+         Logging out...
+       </span>
+     ) : (
+       "Logout"
+     )}
+   </button>
    ```
-
-3. Heading `<h2>` di baris 73, 84, dan 115 **tidak punya class warna eksplisit**:
-   ```tsx
-   <h2 className="text-2xl font-semibold">The Problem</h2>     // ❌ baris 73
-   <h2 className="text-2xl font-semibold">What You Get</h2>     // ❌ baris 84
-   <h2 className="text-2xl font-semibold">FAQ</h2>              // ❌ baris 115
-   ```
-
-   Heading ini mewarisi `color: #f5f5f5` dari body → teks putih di atas background putih = **tidak terlihat**.
-
-### Cara Perbaiki (Step-by-Step untuk Junior Developer)
-
-**File:** `app/p/[id]/page.tsx`
-
-**Langkah 1:** Buka file `app/p/[id]/page.tsx`
-
-**Langkah 2:** Cari baris 73, tambahkan class `text-zinc-900`:
-```diff
-- <h2 className="text-2xl font-semibold">The Problem</h2>
-+ <h2 className="text-2xl font-semibold text-zinc-900">The Problem</h2>
-```
-
-**Langkah 3:** Cari baris 84, tambahkan class `text-zinc-900`:
-```diff
-- <h2 className="text-2xl font-semibold">What You Get</h2>
-+ <h2 className="text-2xl font-semibold text-zinc-900">What You Get</h2>
-```
-
-**Langkah 4:** Cari baris 115, tambahkan class `text-zinc-900`:
-```diff
-- <h2 className="text-2xl font-semibold">FAQ</h2>
-+ <h2 className="text-2xl font-semibold text-zinc-900">FAQ</h2>
-```
-
-**Langkah 5:** Simpan file dan refresh halaman public. Heading sekarang seharusnya terlihat gelap di atas background putih.
-
-> **Kenapa `text-zinc-900`?** Karena heading lain di halaman yang sama (baris 53) sudah menggunakan `text-zinc-900` dan terlihat dengan baik. Kita harus konsisten.
+5. *(Opsional)* Jika ingin lebih cantik, gunakan komponen Toast/Alert yang sudah ada untuk memunculkan pesan "See you later! 👋" tepat sebelum logout.
 
 ---
 
-## BUG #3 — Markdown Mentah Muncul di Benefits Section (MEDIUM)
+## 🎯 Task 3: Percantik Halaman Generate Page (`/generator`)
 
-### Deskripsi
-AI terkadang mengembalikan teks benefits yang mengandung format markdown `**bold**`. Teks ini ditampilkan mentah (literal) di halaman alih-alih diformat sebagai bold.
+Ini bagian yang paling seru! Kita akan merombak sedikit tampilan *progress bar* dan tombol navigasi agar lebih senada dengan tema AI kita.
 
-Contoh yang muncul di halaman:
-```
-**Automate High-Converting Copy:** Let advanced AI write persuasive...
-**Design for Maximum Sales:** Leverage AI-optimized content structures...
-**Launch & Optimize in Minutes:** Go from idea to a live, SEO-friendly...
-```
+**Langkah-langkah Eksekusi:**
 
-Seharusnya `**` tidak muncul, dan teks di antara `**` harus tebal.
+1. **Ubah Progress Bar (Step Indicator):**
+   - Buka `app/generator/page.tsx`.
+   - Cari bagian yang me-render step 1, 2, 3 (progress bar).
+   - **Untuk step yang sedang berjalan (Active) atau selesai (Completed):** Berikan warna background solid yang merepresentasikan "AI" (misalnya gradasi ungu ke biru: `bg-gradient-to-r from-indigo-500 via-purple-500 to-pink-500` atau setidaknya solid `bg-indigo-600`).
+   - **Untuk step yang belum berjalan (Upcoming):** Jangan beri background solid. Berikan saja outline/border (misalnya `border-2 border-zinc-700 bg-transparent text-zinc-500`).
 
-### Akar Masalah
-Ada dua pendekatan untuk memperbaiki ini:
+2. **Ubah Link "Back to Dashboard" Jadi Tombol:**
+   - Cari teks/link "Back to Dashboard".
+   - Ubah elemen tersebut (entah itu `<a>` atau `<Link>`) agar memiliki tampilan tombol.
+   - Berikan class dasar tombol: `inline-flex items-center justify-center rounded-lg px-4 py-2 text-sm font-medium transition-all`.
 
-**Opsi A (Recommended):** Strip markdown di sisi server saat parsing AI response.  
-**Opsi B:** Instruksikan AI secara lebih tegas untuk TIDAK menggunakan markdown.
-
-### Cara Perbaiki — Opsi A: Strip Markdown di `lib/ai.ts`
-
-**File:** `lib/ai.ts`
-
-**Langkah 1:** Tambahkan fungsi helper untuk strip markdown bold:
-```typescript
-// Tambahkan di atas function generateSalesCopy, sekitar baris 33
-function stripMarkdownBold(text: string): string {
-  return text.replace(/\*\*(.*?)\*\*/g, "$1");
-}
-```
-
-**Langkah 2:** Setelah parsing JSON response (sekitar baris 67-68), bersihkan data sebelum return:
-```diff
-  const parsed = JSON.parse(normalized) as unknown;
-- return salesCopySchema.parse(parsed);
-+ const validated = salesCopySchema.parse(parsed);
-+
-+ // Strip markdown formatting dari AI response
-+ return {
-+   ...validated,
-+   painPoints: validated.painPoints.map(stripMarkdownBold),
-+   benefits: validated.benefits.map(stripMarkdownBold),
-+   offer: stripMarkdownBold(validated.offer),
-+   headline: stripMarkdownBold(validated.headline),
-+   subheadline: stripMarkdownBold(validated.subheadline),
-+   callToAction: stripMarkdownBold(validated.callToAction),
-+   faq: validated.faq.map((item) => ({
-+     question: stripMarkdownBold(item.question),
-+     answer: stripMarkdownBold(item.answer),
-+   })),
-+ };
-```
-
-### Cara Perbaiki — Opsi B: Perbaiki Prompt
-
-**File:** `lib/ai.ts`
-
-**Langkah 1:** Tambahkan instruksi di prompt (sekitar baris 48):
-```diff
-  Return ONLY valid JSON as a single object (no markdown, no code fences, no extra text).
-+ IMPORTANT: Do NOT use markdown formatting like **bold** or *italic* in any values. Return plain text only.
-```
-
-> **Rekomendasi:** Gunakan **kedua opsi** (A dan B) sekaligus. Opsi B mengurangi kemungkinan markdown muncul, dan Opsi A menjadi safety net jika AI tetap menggunakan markdown.
+3. **Ubah Warna Tombol Menjadi `#252525`:**
+   - Untuk tombol navigasi di halaman generator (seperti "Back to Dashboard", "Next", atau "Generate"), ubah warna background utamanya menjadi hex code `#252525`.
+   - Karena Tailwind tidak punya nama spesifik untuk `#252525`, kamu bisa pakai class *arbitrary value* milik Tailwind: `bg-[#252525]`.
+   - Jangan lupa tambahkan efek hover, misalnya `hover:bg-[#333333]`.
+   - Pastikan warna teks di dalamnya terang (`text-white` atau `text-zinc-100`) agar kontrasnya pas.
 
 ---
 
-## BUG #4 — Button Hover Warna Tidak Konsisten di Dashboard (LOW)
+### Catatan Tambahan untuk Developer:
+- Selalu tes di mode responsif (mobile) untuk memastikan animasi hover dan ukuran tombol tetap nyaman ditekan pakai jari.
+- Jangan sampai mengubah logika backend/database, fokus kita murni di **UI/UX dan Frontend State** saja.
 
-### Deskripsi
-Tombol-tombol aksi di dashboard (Preview, Copy Link, Publish, Delete) menggunakan class `hover:bg-zinc-50` yang merupakan warna terang. Pada dark theme, saat di-hover, tombol akan menunjukkan background putih yang terlihat janggal.
-
-### File yang Bermasalah
-`components/dashboard/page-actions.tsx` — baris 95, 101, 110
-
-### Cara Perbaiki
-
-**File:** `components/dashboard/page-actions.tsx`
-
-**Langkah 1:** Ganti semua `hover:bg-zinc-50` dengan `hover:bg-zinc-700` agar konsisten dengan dark theme:
-
-```diff
-// Baris 95
-- <a href={`/preview/${id}`} className="rounded-md border px-3 py-1 transition hover:bg-zinc-50">
-+ <a href={`/preview/${id}`} className="rounded-md border border-white/10 px-3 py-1 transition hover:bg-zinc-700">
-
-// Baris 101
-- className="rounded-md border px-3 py-1 transition hover:bg-zinc-50 disabled:cursor-not-allowed disabled:opacity-50"
-+ className="rounded-md border border-white/10 px-3 py-1 transition hover:bg-zinc-700 disabled:cursor-not-allowed disabled:opacity-50"
-
-// Baris 110
-- className="rounded-md border px-3 py-1 transition hover:bg-zinc-50 disabled:opacity-60"
-+ className="rounded-md border border-white/10 px-3 py-1 transition hover:bg-zinc-700 disabled:opacity-60"
-```
-
-**Langkah 2:** Untuk tombol Delete (baris 118), ganti juga:
-```diff
-- className="rounded-md border border-red-200 px-3 py-1 text-red-600 transition hover:bg-red-50 disabled:opacity-60"
-+ className="rounded-md border border-red-400/40 px-3 py-1 text-red-400 transition hover:bg-red-900/30 disabled:opacity-60"
-```
-
-**Langkah 3:** Ganti juga warna border dan text Delete Modal (baris 127-148) supaya konsisten dengan dark theme:
-```diff
-- <div ref={modalRef} className="w-full max-w-md rounded-2xl bg-white p-6 shadow-2xl">
--   <h3 className="text-lg font-semibold">Delete sales page?</h3>
--   <p className="mt-2 text-sm text-zinc-600">
-+ <div ref={modalRef} className="w-full max-w-md rounded-2xl bg-[#202020] border border-white/10 p-6 shadow-2xl">
-+   <h3 className="text-lg font-semibold text-white">Delete sales page?</h3>
-+   <p className="mt-2 text-sm text-zinc-400">
-```
-
----
-
-## Prioritas Perbaikan
-
-| # | Bug | Severity | Effort | Status |
-|---|-----|----------|--------|--------|
-| 1 | Model AI Deprecated | 🔴 Critical | 1 menit | ✅ Fixed |
-| 2 | Heading Tidak Terlihat | 🟠 High | 5 menit | ❌ Belum |
-| 3 | Markdown Mentah di Benefits | 🟡 Medium | 15 menit | ❌ Belum |
-| 4 | Button Hover Inkonsisten | 🟢 Low | 10 menit | ❌ Belum |
-
----
-
-## Cara Verifikasi Setelah Fix
-
-1. **Bug #2:** Buka `/p/[id]` → heading "The Problem", "What You Get", "FAQ" harus terlihat jelas (teks gelap di background putih)
-2. **Bug #3:** Generate sales page baru → pastikan teks benefits tidak mengandung `**` 
-3. **Bug #4:** Hover tombol di dashboard → background hover harus gelap, bukan putih
-
----
-
-## Catatan Tambahan
-
-- **Database:** PostgreSQL di `localhost:5432/ai_generator_db` — pastikan sudah running sebelum test
-- **API Key:** Google Generative AI key ada di `.env` — pastikan masih valid
-- **Model AI:** Sudah diupdate ke `gemini-2.5-flash` (pengganti `gemini-1.5-flash` yang deprecated)
-- **Session:** Menggunakan NextAuth JWT strategy dengan expiry 15 menit
+Semangat codingnya! 💻✨
