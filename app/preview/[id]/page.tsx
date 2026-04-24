@@ -15,7 +15,7 @@ export default async function DraftPreviewPage({ params }: PreviewPageProps) {
   }
 
   const { id } = await params;
-  const page = await getOwnedSalesPageById(id, Number(session.user.id));
+  const page = await getOwnedSalesPageById(id, session.user.id);
 
   if (!page) {
     notFound();
