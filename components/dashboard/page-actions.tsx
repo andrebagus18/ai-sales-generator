@@ -94,6 +94,8 @@ export function PageActions({ id, isPublished }: PageActionsProps) {
       <div className="flex items-center gap-2 text-sm">
         <a
           href={`/preview/${id}`}
+          target="_blank"
+          rel="noopener noreferrer"
           className="rounded-md border border-white/10 px-3 py-1 transition-all duration-200 hover:scale-105 active:scale-95 cursor-pointer hover:bg-zinc-700"
         >
           Preview
