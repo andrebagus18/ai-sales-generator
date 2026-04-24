@@ -93,7 +93,10 @@ export default function GeneratorPage() {
         <div className="mb-8 flex items-end justify-between">
           <div>
             <p className="text-sm uppercase tracking-[0.18em] text-zinc-400">Step {step} of 3</p>
+          <div className="flex items-center gap-3">
+            <img src="/logo.png" alt="AI Logo" className="h-10 w-10 object-contain" />
             <h1 className="mt-2 text-3xl font-semibold text-white">Sales Page Generator</h1>
+          </div>
             <p className="mt-2 text-zinc-300">Fill this brief and generate a polished landing page in seconds.</p>
           </div>
           <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
