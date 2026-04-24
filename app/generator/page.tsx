@@ -93,10 +93,9 @@ export default function GeneratorPage() {
         <div className="mb-8 flex items-end justify-between">
           <div>
             <p className="text-sm uppercase tracking-[0.18em] text-zinc-400">Step {step} of 3</p>
-          <div className="flex items-center gap-3">
-            <img src="/logo.png" alt="AI Logo" className="h-10 w-10 object-contain" />
-            <h1 className="mt-2 text-3xl font-semibold text-white">Sales Page Generator</h1>
-          </div>
+            <div className="flex items-center gap-3">
+              <h1 className="mt-2 text-3xl font-semibold text-white">Sales Page Generator</h1>
+            </div>
             <p className="mt-2 text-zinc-300">Fill this brief and generate a polished landing page in seconds.</p>
           </div>
           <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
@@ -113,11 +112,10 @@ export default function GeneratorPage() {
           {[1, 2, 3].map((value) => (
             <div
               key={value}
-              className={`h-2.5 rounded-full transition-all duration-300 ${
-                value <= step
+              className={`h-2.5 rounded-full transition-all duration-300 ${value <= step
                   ? "bg-gradient-to-r from-indigo-500 via-purple-500 to-pink-500 shadow-[0_0_12px_rgba(139,92,246,0.3)]"
                   : "border border-white/10 bg-transparent"
-              }`}
+                }`}
               aria-hidden="true"
             />
           ))}
@@ -133,21 +131,21 @@ export default function GeneratorPage() {
                 exit={{ opacity: 0, y: -12 }}
                 transition={{ duration: 0.2, ease: "easeOut" }}
               >
-              <label className="mb-2 block text-sm font-medium text-zinc-100">What is your product name?</label>
-              <input
-                name="productName"
-                required
-                minLength={2}
-                value={formData.productName}
-                onChange={(event) =>
-                  setFormData((prev) => ({
-                    ...prev,
-                    productName: event.target.value,
-                  }))
-                }
-                placeholder="Example: SalesBoost AI"
-                className="w-full rounded-lg border border-white/10 bg-[#252525] px-4 py-3 text-white"
-              />
+                <label className="mb-2 block text-sm font-medium text-zinc-100">What is your product name?</label>
+                <input
+                  name="productName"
+                  required
+                  minLength={2}
+                  value={formData.productName}
+                  onChange={(event) =>
+                    setFormData((prev) => ({
+                      ...prev,
+                      productName: event.target.value,
+                    }))
+                  }
+                  placeholder="Example: SalesBoost AI"
+                  className="w-full rounded-lg border border-white/10 bg-[#252525] px-4 py-3 text-white"
+                />
               </motion.section>
             ) : null}
 
@@ -159,21 +157,21 @@ export default function GeneratorPage() {
                 exit={{ opacity: 0, y: -12 }}
                 transition={{ duration: 0.2, ease: "easeOut" }}
               >
-              <label className="mb-2 block text-sm font-medium text-zinc-100">Describe your product in detail</label>
-              <textarea
-                name="originalDescription"
-                required
-                minLength={10}
-                value={formData.originalDescription}
-                onChange={(event) =>
-                  setFormData((prev) => ({
-                    ...prev,
-                    originalDescription: event.target.value,
-                  }))
-                }
-                placeholder="What it does, key features, and why it matters."
-                className="h-40 w-full rounded-lg border border-white/10 bg-[#252525] px-4 py-3 text-white"
-              />
+                <label className="mb-2 block text-sm font-medium text-zinc-100">Describe your product in detail</label>
+                <textarea
+                  name="originalDescription"
+                  required
+                  minLength={10}
+                  value={formData.originalDescription}
+                  onChange={(event) =>
+                    setFormData((prev) => ({
+                      ...prev,
+                      originalDescription: event.target.value,
+                    }))
+                  }
+                  placeholder="What it does, key features, and why it matters."
+                  className="h-40 w-full rounded-lg border border-white/10 bg-[#252525] px-4 py-3 text-white"
+                />
               </motion.section>
             ) : null}
 
@@ -186,36 +184,36 @@ export default function GeneratorPage() {
                 transition={{ duration: 0.2, ease: "easeOut" }}
                 className="space-y-6"
               >
-              <div>
-                <label className="mb-2 block text-sm font-medium text-zinc-100">Who is your target market?</label>
-                <input
-                  name="targetMarket"
-                  required
-                  minLength={3}
-                  value={formData.targetMarket}
-                  onChange={(event) =>
-                    setFormData((prev) => ({
-                      ...prev,
-                      targetMarket: event.target.value,
-                    }))
-                  }
-                  placeholder="Example: DTC founders and growth marketers"
-                  className="w-full rounded-lg border border-white/10 bg-[#252525] px-4 py-3 text-white"
-                />
-              </div>
+                <div>
+                  <label className="mb-2 block text-sm font-medium text-zinc-100">Who is your target market?</label>
+                  <input
+                    name="targetMarket"
+                    required
+                    minLength={3}
+                    value={formData.targetMarket}
+                    onChange={(event) =>
+                      setFormData((prev) => ({
+                        ...prev,
+                        targetMarket: event.target.value,
+                      }))
+                    }
+                    placeholder="Example: DTC founders and growth marketers"
+                    className="w-full rounded-lg border border-white/10 bg-[#252525] px-4 py-3 text-white"
+                  />
+                </div>
 
-              <div className="rounded-xl border border-white/10 bg-[#252525] p-4">
-                <h2 className="font-semibold text-white">Brief review</h2>
-                <p className="mt-3 text-sm text-zinc-300">
-                  <span className="font-medium text-zinc-100">Product:</span> {formData.productName || "-"}
-                </p>
-                <p className="mt-2 text-sm text-zinc-300">
-                  <span className="font-medium text-zinc-100">Description:</span> {formData.originalDescription || "-"}
-                </p>
-                <p className="mt-2 text-sm text-zinc-300">
-                  <span className="font-medium text-zinc-100">Target market:</span> {formData.targetMarket || "-"}
-                </p>
-              </div>
+                <div className="rounded-xl border border-white/10 bg-[#252525] p-4">
+                  <h2 className="font-semibold text-white">Brief review</h2>
+                  <p className="mt-3 text-sm text-zinc-300">
+                    <span className="font-medium text-zinc-100">Product:</span> {formData.productName || "-"}
+                  </p>
+                  <p className="mt-2 text-sm text-zinc-300">
+                    <span className="font-medium text-zinc-100">Description:</span> {formData.originalDescription || "-"}
+                  </p>
+                  <p className="mt-2 text-sm text-zinc-300">
+                    <span className="font-medium text-zinc-100">Target market:</span> {formData.targetMarket || "-"}
+                  </p>
+                </div>
               </motion.section>
             ) : null}
           </AnimatePresence>

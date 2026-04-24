@@ -31,7 +31,6 @@ async function HomeView({
 
       <div className="relative mx-auto flex min-h-screen w-full max-w-5xl flex-col justify-center px-6 text-white">
         <div className="flex items-center gap-4">
-          <img src="/logo.png" alt="AI Logo" className="h-16 w-16 object-contain" />
           <h1 className="max-w-3xl text-5xl font-semibold tracking-tight">AI Sales Page Generator</h1>
         </div>
         <p className="mt-4 max-w-2xl text-lg text-zinc-200">
