@@ -35,13 +35,13 @@ async function HomeView({
           Generate conversion-focused sales pages from a brief, publish instantly, and share SEO-friendly links in minutes.
         </p>
         <div className="mt-8 flex w-full max-w-md flex-col items-center gap-3">
-          <Link href={getStartedHref} className="w-64 rounded-full border border-white/60 px-6 py-3 text-center text-base text-white">
+          <Link href={getStartedHref} className="w-64 rounded-full border border-white/60 px-6 py-3 text-center text-base text-white transition-all duration-200 hover:scale-105 active:scale-95 cursor-pointer">
             Get Started
           </Link>
-          <Link href="/login" className="w-64 rounded-full border border-white/60 px-6 py-3 text-center text-base text-white">
+          <Link href="/login" className="w-64 rounded-full border border-white/60 px-6 py-3 text-center text-base text-white transition-all duration-200 hover:scale-105 active:scale-95 cursor-pointer">
             Login
           </Link>
-          <Link href="/register" className="w-64 rounded-full border border-white/60 px-6 py-3 text-center text-base text-white">
+          <Link href="/register" className="w-64 rounded-full border border-white/60 px-6 py-3 text-center text-base text-white transition-all duration-200 hover:scale-105 active:scale-95 cursor-pointer">
             Register
           </Link>
         </div>

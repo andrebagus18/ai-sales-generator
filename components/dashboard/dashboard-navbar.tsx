@@ -23,12 +23,15 @@ type DashboardNavbarProps = {
 export function DashboardNavbar({ search, onSearchChange, historyItems }: DashboardNavbarProps) {
   const router = useRouter();
   const [isHistoryOpen, setIsHistoryOpen] = useState(false);
+  const [isLoggingOut, setIsLoggingOut] = useState(false);
 
   async function handleLogout() {
     const confirmed = window.confirm("Are you sure you want to logout?");
     if (!confirmed) {
       return;
     }
+
+    setIsLoggingOut(true);
 
     try {
       localStorage.clear();
@@ -53,23 +56,24 @@ export function DashboardNavbar({ search, onSearchChange, historyItems }: Dashbo
         <button
           type="button"
           onClick={() => setIsHistoryOpen(true)}
-          className="inline-flex items-center gap-2 rounded-lg border border-white/10 px-4 py-2 text-sm"
+          className="inline-flex items-center gap-2 rounded-lg border border-white/10 px-4 py-2 text-sm transition-all duration-200 hover:scale-105 active:scale-95 cursor-pointer"
         >
           <History size={16} />
           History
         </button>
         <Link
           href="/generator"
-          className="rounded-lg border border-white/10 bg-[#252525] px-4 py-2 text-sm text-white transition hover:bg-[#333]"
+          className="rounded-lg border border-white/10 bg-[#252525] px-4 py-2 text-sm text-white transition-all duration-200 hover:scale-105 active:scale-95 cursor-pointer"
         >
           New Page
         </Link>
         <button
           type="button"
+          disabled={isLoggingOut}
           onClick={handleLogout}
-          className="rounded-lg border border-red-400/40 px-4 py-2 text-sm text-red-300"
+          className="rounded-lg border border-red-400/40 px-4 py-2 text-sm text-red-300 transition-all duration-200 hover:scale-105 active:scale-95 cursor-pointer disabled:opacity-50"
         >
-          Logout
+          {isLoggingOut ? "Logging out..." : "Logout"}
         </button>
       </div>
 

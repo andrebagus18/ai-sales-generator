@@ -96,18 +96,25 @@ export default function GeneratorPage() {
             <h1 className="mt-2 text-3xl font-semibold text-white">Sales Page Generator</h1>
             <p className="mt-2 text-zinc-300">Fill this brief and generate a polished landing page in seconds.</p>
           </div>
-          <motion.div whileHover={{ x: -3 }}>
-            <Link href="/dashboard" className="text-sm text-zinc-200 underline underline-offset-4">
+          <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
+            <Link
+              href="/dashboard"
+              className="inline-flex items-center justify-center rounded-lg bg-[#252525] border border-white/10 px-4 py-2 text-sm font-medium text-zinc-200 transition-all hover:bg-[#333333] cursor-pointer"
+            >
               Back to Dashboard
             </Link>
           </motion.div>
         </div>
 
-        <div className="mb-8 grid grid-cols-3 gap-2">
+        <div className="mb-8 grid grid-cols-3 gap-3">
           {[1, 2, 3].map((value) => (
             <div
               key={value}
-              className={`h-2 rounded-full ${value <= step ? "gemini-progress" : "bg-zinc-200/40"}`}
+              className={`h-2.5 rounded-full transition-all duration-300 ${
+                value <= step
+                  ? "bg-gradient-to-r from-indigo-500 via-purple-500 to-pink-500 shadow-[0_0_12px_rgba(139,92,246,0.3)]"
+                  : "border border-white/10 bg-transparent"
+              }`}
               aria-hidden="true"
             />
           ))}
@@ -212,17 +219,29 @@ export default function GeneratorPage() {
 
           <div className="flex items-center gap-3">
             {step > 1 ? (
-              <button type="button" onClick={goBack} className="rounded-lg border border-white/10 px-4 py-3">
+              <button
+                type="button"
+                onClick={goBack}
+                className="rounded-lg border border-white/10 bg-[#252525] px-4 py-3 text-sm text-zinc-100 transition-all duration-200 hover:scale-105 active:scale-95 cursor-pointer hover:bg-[#333]"
+              >
                 Back
               </button>
             ) : null}
 
             {step < 3 ? (
-              <button className="rounded-lg px-4 py-3" type="button" onClick={goNext}>
+              <button
+                className="rounded-lg bg-[#252525] border border-white/10 px-6 py-3 text-sm font-medium text-white transition-all duration-200 hover:scale-105 active:scale-95 cursor-pointer hover:bg-[#333]"
+                type="button"
+                onClick={goNext}
+              >
                 Continue
               </button>
             ) : (
-              <button className="rounded-lg px-4 py-3" type="submit" disabled={isSubmitting}>
+              <button
+                className="rounded-lg bg-[#252525] border border-white/10 px-6 py-3 text-sm font-medium text-white transition-all duration-200 hover:scale-105 active:scale-95 cursor-pointer hover:bg-[#333] disabled:opacity-50"
+                type="submit"
+                disabled={isSubmitting}
+              >
                 {isSubmitting ? "Generating..." : "Generate Landing Page"}
               </button>
             )}
