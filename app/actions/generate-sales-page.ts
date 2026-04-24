@@ -33,7 +33,7 @@ export async function createSalesPageFromBrief(input: BriefInput) {
         originalDescription: parsed.data.originalDescription,
         targetMarket: parsed.data.targetMarket,
         aiContent,
-        userId: Number(session.user.id),
+        userId: session.user.id,
       },
     });
 

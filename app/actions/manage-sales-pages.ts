@@ -11,7 +11,7 @@ async function getCurrentUserId() {
     throw new Error("Unauthorized");
   }
 
-  return Number(session.user.id);
+  return session.user.id;
 }
 
 export async function togglePublishSalesPage(formData: FormData) {

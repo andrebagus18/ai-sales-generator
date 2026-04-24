@@ -1,6 +1,8 @@
 import type { NextAuthOptions } from "next-auth";
 import CredentialsProvider from "next-auth/providers/credentials";
 import GoogleProvider from "next-auth/providers/google";
+import { PrismaAdapter } from "@auth/prisma-adapter";
+import { prisma } from "@/lib/prisma";
 import { z } from "zod";
 import { verifyUserCredentials } from "@/lib/auth/credentials";
 
@@ -10,6 +12,7 @@ const credentialsSchema = z.object({
 });
 
 export const authOptions: NextAuthOptions = {
+  adapter: PrismaAdapter(prisma) as any,
   session: {
     strategy: "jwt",
     maxAge: 60 * 15,
@@ -59,4 +62,5 @@ export const authOptions: NextAuthOptions = {
     },
   },
 };
+
 

@@ -13,7 +13,7 @@ export async function getPublishedSalesPageById(id: string) {
   });
 }
 
-export async function getOwnedSalesPageById(id: string, userId: number) {
+export async function getOwnedSalesPageById(id: string, userId: string) {
   return prisma.salesPage.findFirst({
     where: { id, userId },
     select: {
@@ -26,4 +26,3 @@ export async function getOwnedSalesPageById(id: string, userId: number) {
     },
   });
 }
-
