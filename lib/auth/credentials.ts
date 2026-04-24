@@ -19,6 +19,10 @@ export async function verifyUserCredentials(
     return null;
   }
 
+  if (!user.password) {
+    return null;
+  }
+
   const isValid = await bcrypt.compare(password, user.password);
   if (!isValid) {
     return null;
@@ -26,8 +30,7 @@ export async function verifyUserCredentials(
 
   return {
     id: String(user.id),
-    name: user.name,
-    email: user.email,
+    name: user.name ?? "",
+    email: user.email ?? "",
   };
 }
-
