@@ -20,7 +20,7 @@ export function GoogleSignInButton({
       type="button"
       onClick={onClick}
       disabled={isLoading}
-      className="mt-6 flex w-full items-center justify-center gap-2 rounded-lg border border-white/15 bg-white/10 px-4 py-3 text-sm text-white transition hover:bg-white/15 disabled:opacity-60"
+      className="mt-6 flex w-full items-center justify-center gap-2 rounded-lg border border-white/15 bg-white/10 px-4 py-3 text-sm text-white transition hover:bg-white/15 hover:cursor-pointer disabled:opacity-60"
     >
       <Circle size={16} />
       {isLoading ? loadingText : idleText}

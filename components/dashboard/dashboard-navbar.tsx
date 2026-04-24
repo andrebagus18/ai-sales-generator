@@ -56,14 +56,14 @@ export function DashboardNavbar({ search, onSearchChange, historyItems }: Dashbo
         <button
           type="button"
           onClick={() => setIsHistoryOpen(true)}
-          className="inline-flex items-center gap-2 rounded-lg border border-white/10 px-4 py-2 text-sm transition-all duration-200 hover:scale-105 active:scale-95 cursor-pointer"
+          className="inline-flex items-center gap-2 rounded-lg border border-white/10 hover:bg-zinc-700 px-4 py-2 text-sm transition-all duration-200 hover:scale-105 active:scale-95 cursor-pointer"
         >
           <History size={16} />
           History
         </button>
         <Link
           href="/generator"
-          className="rounded-lg border border-white/10 bg-[#252525] px-4 py-2 text-sm text-white transition-all duration-200 hover:scale-105 active:scale-95 cursor-pointer"
+          className="rounded-lg border border-white/10 hover:bg-zinc-700 px-4 py-2 text-sm text-white transition-all duration-200 hover:scale-105 active:scale-95 cursor-pointer"
         >
           New Page
         </Link>
@@ -71,7 +71,7 @@ export function DashboardNavbar({ search, onSearchChange, historyItems }: Dashbo
           type="button"
           disabled={isLoggingOut}
           onClick={handleLogout}
-          className="rounded-lg border border-red-400/40 px-4 py-2 text-sm text-red-300 transition-all duration-200 hover:scale-105 active:scale-95 cursor-pointer disabled:opacity-50"
+          className="rounded-lg border border-red-400/40 px-4 py-2 text-sm text-red-300 transition-all duration-200 hover:scale-105 hover:bg-red-900/30 active:scale-95 cursor-pointer disabled:opacity-50"
         >
           {isLoggingOut ? "Logging out..." : "Logout"}
         </button>

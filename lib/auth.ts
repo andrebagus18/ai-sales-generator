@@ -12,8 +12,8 @@ const credentialsSchema = z.object({
 export const authOptions: NextAuthOptions = {
   session: {
     strategy: "jwt",
-    maxAge: 60 * 60 * 24 * 7,
-    updateAge: 60 * 60 * 24,
+    maxAge: 60 * 15,
+    updateAge: 0,
   },
   pages: {
     signIn: "/login",

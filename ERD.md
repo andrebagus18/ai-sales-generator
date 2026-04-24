@@ -61,3 +61,4 @@ erDiagram
 - Deleting a user should cascade-delete owned sales pages (recommended for MVP simplicity).
 - Public access is based on `SalesPage.id` and `isPublished = true`.
 
+    }

@@ -75,7 +75,7 @@ export default function LoginPage() {
           {error ? <p className="text-sm text-rose-300">{error}</p> : null}
           <button
             disabled={isLoading}
-            className="gemini-button flex w-full items-center justify-center gap-2 rounded-lg px-4 py-3 font-medium text-white disabled:opacity-60"
+            className="gemini-button flex w-full items-center justify-center gap-2 rounded-lg px-4 py-3 font-medium text-white bg-white/10 hover:bg-white/15 disabled:opacity-60"
             type="submit"
           >
             {isLoading ? "Logging in..." : "Sign In"}
