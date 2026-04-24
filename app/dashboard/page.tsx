@@ -11,7 +11,7 @@ export default async function DashboardPage() {
   }
 
   const pages = await prisma.salesPage.findMany({
-    where: { userId: Number(session.user.id) },
+    where: { userId: session.user.id },
     orderBy: { createdAt: "desc" },
     select: {
       id: true,
