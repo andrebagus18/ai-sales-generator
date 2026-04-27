@@ -25,7 +25,11 @@ export async function createSalesPageFromBrief(input: BriefInput) {
     throw new Error("Please complete all required fields before generating.");
   }
   try {
+    console.log("Creating sales page for user:", session.user.id);
+    console.log("Input data:", parsed.data);
+    
     const aiContent = await generateSalesCopy(parsed.data);
+    console.log("AI Content generated successfully");
 
     const page = await prisma.salesPage.create({
       data: {

@@ -22,13 +22,13 @@ export default function GeneratorPage() {
 
   const stepError = useMemo(() => {
     if (step === 1 && formData.productName.trim().length < 2) {
-      return "Nama produk minimal 2 karakter.";
+      return "Product name must be at least 2 characters.";
     }
     if (step === 2 && formData.originalDescription.trim().length < 10) {
-      return "Deskripsi minimal 10 karakter.";
+      return "Description must be at least 10 characters.";
     }
     if (step === 3 && formData.targetMarket.trim().length < 3) {
-      return "Target market minimal 3 karakter.";
+      return "Target market must be at least 3 characters.";
     }
     return "";
   }, [formData.originalDescription, formData.productName, formData.targetMarket, step]);
@@ -62,7 +62,7 @@ export default function GeneratorPage() {
     }
 
     setIsSubmitting(true);
-    setStatus("Sedang meramu konten landing page Anda...");
+    setStatus("Brewing your landing page copy...");
 
     try {
       const page = await createSalesPageFromBrief({
@@ -72,13 +72,13 @@ export default function GeneratorPage() {
       });
 
       setStatus("");
-      setSuccessMessage("Halaman penjualan berhasil dibuat!");
+      setSuccessMessage("Sales page generated successfully!");
       window.setTimeout(() => {
         router.replace(`/dashboard?created=${page.id}`);
       }, 1500);
     } catch (error) {
       console.error("Landing page generation failed", error);
-      const message = error instanceof Error ? error.message : "Gagal membuat halaman penjualan.";
+      const message = error instanceof Error ? error.message : "Failed to generate sales page.";
       setStatus(message);
       setIsSubmitting(false);
     }
@@ -157,7 +157,7 @@ export default function GeneratorPage() {
                       required
                       value={formData.originalDescription}
                       onChange={(e) => setFormData(p => ({ ...p, originalDescription: e.target.value }))}
-                      placeholder="Jelaskan apa yang produk Anda lakukan, fitur utama, dan masalah yang diselesaikan..."
+                      placeholder="Describe what your product does, key features, and the problems it solves..."
                       className="w-full bg-white/5 border border-white/10 rounded-2xl p-4 text-white focus:outline-none focus:border-[#04D9FF]/50 focus:ring-1 focus:ring-[#04D9FF]/50 transition-all text-lg min-h-[200px]"
                     />
                   </label>

@@ -73,9 +73,9 @@ export function DashboardContent({ user, pages }: DashboardContentProps) {
           <div className="p-4 rounded-full bg-[#04D9FF]/10 text-[#04D9FF] mb-4">
             <FilePlus2 size={32} />
           </div>
-          <h3 className="text-xl font-bold text-white mb-2">Belum ada page dibuat</h3>
+          <h3 className="text-xl font-bold text-white mb-2">No pages found</h3>
           <p className="text-zinc-400 max-w-sm mb-8">
-            Kamu belum memiliki page yang dibuat. Yuk mulai buat page pertamamu dengan generator AI kami!
+            You haven't created any pages yet. Start building your first one with our AI generator!
           </p>
           <Link
             href="/generator"

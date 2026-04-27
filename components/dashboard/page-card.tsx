@@ -1,8 +1,9 @@
 "use client";
 
-import { Calendar, ExternalLink, Copy, Globe, Trash2, MoreVertical } from "lucide-react";
+import { Calendar, Globe } from "lucide-react";
 import { PageActions } from "./page-actions";
 import { motion } from "framer-motion";
+import Image from "next/image";
 
 type PageCardProps = {
   id: string;
@@ -19,17 +20,28 @@ export function PageCard({ id, productName, originalDescription, isPublished, cr
     year: "numeric",
   });
 
+  // Use id to pick a deterministic dummy image
+  const thumbIndex = (id.charCodeAt(0) % 3) + 1;
+  const thumbPath = `/dummy-image/thumb-${thumbIndex}.png`;
+
   return (
     <motion.div 
       whileHover={{ y: -5 }}
       className="group relative flex flex-col overflow-hidden rounded-2xl border border-white/10 bg-white/5 backdrop-blur-md transition-all duration-300 hover:border-[#04D9FF]/50 hover:shadow-[0_0_20px_rgba(4,217,255,0.15)]"
     >
-      {/* Thumbnail Placeholder */}
-      <div className="aspect-video w-full bg-gradient-to-br from-[#0F172A] to-[#1E293B] flex items-center justify-center p-6 overflow-hidden relative">
-        <div className="absolute inset-0 bg-[#04D9FF]/5 opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
-        <div className="text-center z-10">
-          <Globe size={40} className="mx-auto mb-2 text-[#04D9FF]/40 group-hover:text-[#04D9FF] transition-colors duration-300" />
-          <p className="text-[10px] uppercase tracking-widest text-[#04D9FF]/40 font-bold">Sales Page</p>
+      {/* Thumbnail */}
+      <div className="aspect-video w-full bg-gradient-to-br from-[#0F172A] to-[#1E293B] flex items-center justify-center overflow-hidden relative">
+        <Image 
+          src={thumbPath} 
+          alt={productName}
+          fill
+          className="object-cover opacity-60 group-hover:opacity-100 group-hover:scale-110 transition-all duration-500"
+        />
+        <div className="absolute inset-0 bg-[#0F172A]/40 group-hover:bg-transparent transition-colors duration-300" />
+        <div className="absolute top-3 left-3 z-10">
+          <div className="p-1.5 rounded-lg bg-[#04D9FF]/20 backdrop-blur-md border border-[#04D9FF]/30 text-[#04D9FF]">
+            <Globe size={14} />
+          </div>
         </div>
       </div>
 

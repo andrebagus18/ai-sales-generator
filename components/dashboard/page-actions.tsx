@@ -72,14 +72,16 @@ export function PageActions({ id, isPublished }: PageActionsProps) {
     return () => document.removeEventListener("keydown", onKeyDown);
   }, [isDeleteModalOpen]);
 
+  const buttonBaseClass = "flex flex-1 items-center justify-center gap-1.5 rounded-lg border px-3 py-1.5 text-[11px] font-bold transition-all active:scale-95 disabled:opacity-50";
+
   return (
     <>
-      <div className="flex flex-wrap items-center gap-2">
+      <div className="grid grid-cols-2 gap-2">
         <a
           href={`/preview/${id}`}
           target="_blank"
           rel="noopener noreferrer"
-          className="flex items-center gap-1.5 rounded-lg bg-white/5 border border-white/10 px-3 py-1.5 text-xs font-semibold text-white transition-all hover:bg-white/10 hover:border-[#04D9FF]/30 active:scale-95"
+          className={`${buttonBaseClass} bg-white/5 border-white/10 text-white hover:bg-white/10 hover:border-[#04D9FF]/30`}
         >
           <ExternalLink size={14} className="text-[#04D9FF]" />
           Preview
@@ -88,7 +90,7 @@ export function PageActions({ id, isPublished }: PageActionsProps) {
         <button
           onClick={onCopyPublicLink}
           disabled={!isPublished}
-          className="flex items-center gap-1.5 rounded-lg bg-white/5 border border-white/10 px-3 py-1.5 text-xs font-semibold text-white transition-all hover:bg-white/10 hover:border-[#04D9FF]/30 active:scale-95 disabled:opacity-30 disabled:cursor-not-allowed"
+          className={`${buttonBaseClass} bg-white/5 border-white/10 text-white hover:bg-white/10 hover:border-[#04D9FF]/30 disabled:cursor-not-allowed`}
           type="button"
         >
           <Copy size={14} className={isPublished ? "text-[#04D9FF]" : "text-zinc-500"} />
@@ -98,7 +100,7 @@ export function PageActions({ id, isPublished }: PageActionsProps) {
         <button
           onClick={onTogglePublish}
           disabled={isPending}
-          className={`flex items-center gap-1.5 rounded-lg border px-3 py-1.5 text-xs font-semibold transition-all active:scale-95 disabled:opacity-60 ${
+          className={`${buttonBaseClass} ${
             isPublished 
               ? "bg-white/5 border-white/10 text-white hover:bg-white/10" 
               : "bg-[#04D9FF]/10 border-[#04D9FF]/30 text-[#04D9FF] hover:bg-[#04D9FF]/20"
@@ -116,7 +118,7 @@ export function PageActions({ id, isPublished }: PageActionsProps) {
         <button
           onClick={() => setIsDeleteModalOpen(true)}
           disabled={isPending}
-          className="flex items-center gap-1.5 rounded-lg bg-white/5 border border-white/10 px-3 py-1.5 text-xs font-semibold text-red-400 transition-all hover:bg-red-500/10 hover:border-red-500/30 active:scale-95 disabled:opacity-60"
+          className={`${buttonBaseClass} bg-white/5 border-white/10 text-red-400 hover:bg-red-500/10 hover:border-red-500/30`}
           type="button"
         >
           <Trash2 size={14} />
@@ -147,9 +149,9 @@ export function PageActions({ id, isPublished }: PageActionsProps) {
                 <div className="mb-4 p-3 rounded-full bg-red-500/10 text-red-500">
                   <Trash2 size={28} />
                 </div>
-                <h3 className="text-xl font-bold text-white mb-2">Hapus Halaman?</h3>
+                <h3 className="text-xl font-bold text-white mb-2">Delete Page?</h3>
                 <p className="text-zinc-400 text-sm mb-8">
-                  Tindakan ini tidak dapat dibatalkan. Halaman dan semua konten AI yang dibuat akan dihapus permanen.
+                  This action cannot be undone. The page and all generated AI content will be permanently removed.
                 </p>
                 <div className="flex w-full gap-3">
                   <button
@@ -158,7 +160,7 @@ export function PageActions({ id, isPublished }: PageActionsProps) {
                     ref={cancelButtonRef}
                     className="flex-1 rounded-xl bg-white/5 border border-white/10 py-3 text-sm font-bold text-white hover:bg-white/10 transition-all"
                   >
-                    Batal
+                    Cancel
                   </button>
                   <button
                     type="button"
@@ -166,7 +168,7 @@ export function PageActions({ id, isPublished }: PageActionsProps) {
                     disabled={isPending}
                     className="flex-1 rounded-xl bg-red-500 py-3 text-sm font-bold text-white hover:bg-red-600 transition-all disabled:opacity-50"
                   >
-                    {isPending ? "Menghapus..." : "Ya, Hapus"}
+                    {isPending ? "Deleting..." : "Yes, Delete"}
                   </button>
                 </div>
               </div>
