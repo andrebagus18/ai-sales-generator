@@ -138,7 +138,7 @@ export default function GeneratorPage() {
                       className="w-full bg-white/5 border border-white/10 rounded-2xl p-4 text-white focus:outline-none focus:border-[#04D9FF]/50 focus:ring-1 focus:ring-[#04D9FF]/50 transition-all text-lg"
                     />
                   </label>
-                  <p className="text-zinc-500 text-sm italic">Nama produk atau merek yang ingin Anda promosikan.</p>
+                  <p className="text-zinc-500 text-sm italic">The name of the product or brand you want to promote.</p>
                 </motion.div>
               )}
 
