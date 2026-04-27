@@ -1,6 +1,7 @@
 import { getServerSession } from "next-auth";
 import { notFound, redirect } from "next/navigation";
 import { authOptions } from "@/lib/auth";
+import { getOwnedSalesPageById } from "@/lib/sales-pages";
 import { TemplateRenderer } from "@/components/templates/template-renderer";
 import { PublicAIContent } from "@/components/templates/types";
 

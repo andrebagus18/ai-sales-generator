@@ -12,6 +12,7 @@ type DashboardPageItem = {
   originalDescription: string;
   isPublished: boolean;
   createdAt: string;
+  thumbnailUrl?: string | null;
 };
 
 type DashboardContentProps = {
