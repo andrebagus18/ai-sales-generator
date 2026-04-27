@@ -3,14 +3,14 @@
 import { useState } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { 
-  Home, 
-  FilePlus, 
-  Layout, 
-  History, 
-  Settings, 
-  Menu, 
-  X, 
+import {
+  Home,
+  FilePlus,
+  Layout,
+  History,
+  Settings,
+  Menu,
+  X,
   LogOut,
   Sparkles,
   Bell
@@ -67,20 +67,19 @@ export function Sidebar({ user }: SidebarProps) {
             <Link
               key={item.name}
               href={item.href}
-              className={`flex items-center justify-between px-4 py-3 rounded-xl transition-all duration-200 group ${
-                isActive 
-                  ? "bg-[#04D9FF]/10 text-[#04D9FF]" 
+              className={`flex items-center justify-between px-4 py-3 rounded-xl transition-all duration-200 group ${isActive
+                  ? "bg-[#04D9FF]/10 text-[#04D9FF]"
                   : "text-zinc-400 hover:bg-white/5 hover:text-white"
-              }`}
+                }`}
               onClick={(e) => {
                 if (isSettings) handleSettingsClick(e);
                 else setIsOpen(false);
               }}
             >
               <div className="flex items-center gap-3">
-                <item.icon 
-                  size={20} 
-                  className={isActive ? "text-[#04D9FF]" : "group-hover:text-[#04D9FF]"} 
+                <item.icon
+                  size={20}
+                  className={isActive ? "text-[#04D9FF]" : "group-hover:text-[#04D9FF]"}
                 />
                 <span className="font-medium">{item.name}</span>
               </div>
@@ -153,9 +152,10 @@ export function Sidebar({ user }: SidebarProps) {
           </div>
           <span className="font-bold text-white tracking-tight">AI Generator</span>
         </div>
-        <button 
+        <button
           onClick={toggleSidebar}
           className="p-2 rounded-lg bg-white/5 text-white hover:bg-white/10 transition-colors"
+          aria-label="navigasi button mobile"
         >
           {isOpen ? <X size={24} /> : <Menu size={24} />}
         </button>

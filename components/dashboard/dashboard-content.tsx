@@ -30,8 +30,8 @@ export function DashboardContent({ user, pages }: DashboardContentProps) {
   const filteredPages = useMemo(() => {
     const value = search.trim().toLowerCase();
     if (!value) return pages;
-    return pages.filter((page) => 
-      page.productName.toLowerCase().includes(value) || 
+    return pages.filter((page) =>
+      page.productName.toLowerCase().includes(value) ||
       page.originalDescription.toLowerCase().includes(value)
     );
   }, [pages, search]);
@@ -52,7 +52,7 @@ export function DashboardContent({ user, pages }: DashboardContentProps) {
           </h1>
           <p className="text-zinc-400">Manage and monitor your AI-generated sales pages.</p>
         </div>
-        
+
         <div className="relative group">
           <Search className="absolute left-3 top-1/2 -translate-y-1/2 text-zinc-500 group-focus-within:text-[#04D9FF] transition-colors" size={18} />
           <input
@@ -97,7 +97,7 @@ export function DashboardContent({ user, pages }: DashboardContentProps) {
                   exit={{ opacity: 0, scale: 0.9 }}
                   transition={{ duration: 0.3, delay: index * 0.05 }}
                 >
-                  <PageCard {...page} />
+                  <PageCard {...page} priority={index < 2} />
                 </motion.div>
               ))}
             </AnimatePresence>
@@ -113,17 +113,16 @@ export function DashboardContent({ user, pages }: DashboardContentProps) {
               >
                 <ChevronLeft size={20} />
               </button>
-              
+
               <div className="flex items-center gap-2">
                 {Array.from({ length: totalPages }, (_, i) => i + 1).map((page) => (
                   <button
                     key={page}
                     onClick={() => setCurrentPage(page)}
-                    className={`w-10 h-10 rounded-lg border transition-all ${
-                      currentPage === page
+                    className={`w-10 h-10 rounded-lg border transition-all ${currentPage === page
                         ? "bg-[#04D9FF]/10 border-[#04D9FF] text-[#04D9FF] font-bold"
                         : "bg-white/5 border-white/10 text-zinc-400 hover:bg-white/10"
-                    }`}
+                      }`}
                   >
                     {page}
                   </button>
