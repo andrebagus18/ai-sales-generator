@@ -8,6 +8,7 @@ export async function getPublishedSalesPageById(id: string) {
       productName: true,
       targetMarket: true,
       aiContent: true,
+      templateType: true,
       createdAt: true,
     },
   });
@@ -22,6 +23,7 @@ export async function getOwnedSalesPageById(id: string, userId: string) {
       targetMarket: true,
       aiContent: true,
       isPublished: true,
+      templateType: true,
       createdAt: true,
     },
   });

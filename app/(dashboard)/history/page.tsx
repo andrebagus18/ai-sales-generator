@@ -19,6 +19,7 @@ export default async function HistoryPage() {
       isPublished: true,
       createdAt: true,
       originalDescription: true,
+      thumbnailUrl: true,
     },
   });
 

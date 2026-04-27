@@ -11,18 +11,18 @@ type PageCardProps = {
   originalDescription: string;
   isPublished: boolean;
   createdAt: string;
+  thumbnailUrl?: string | null;
 };
 
-export function PageCard({ id, productName, originalDescription, isPublished, createdAt }: PageCardProps) {
+export function PageCard({ id, productName, originalDescription, isPublished, createdAt, thumbnailUrl }: PageCardProps) {
   const formattedDate = new Date(createdAt).toLocaleDateString("en-US", {
     month: "short",
     day: "numeric",
     year: "numeric",
   });
 
-  // Use id to pick a deterministic dummy image
-  const thumbIndex = (id.charCodeAt(0) % 3) + 1;
-  const thumbPath = `/dummy-image/thumb-${thumbIndex}.png`;
+  // Use saved thumbnailUrl if available, otherwise pick a deterministic dummy image
+  const thumbPath = thumbnailUrl || `/dummy-image/thumb-${(id.charCodeAt(0) % 3) + 1}.png`;
 
   return (
     <motion.div 

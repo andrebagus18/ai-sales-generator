@@ -1,67 +1,62 @@
-# 🚀 Next Up: Penyempurnaan Dashboard & Fix Error Generate Page
+# 🚀 Next Up: Fitur Template Landing Page & Alur Generate Page
 
-Halo tim! (Atau rekan AI yang akan melanjutkan task ini 👋).
+Halo tim! (Atau rekan AI model yang lagi ngerjain task ini 👋).
 
-Ada beberapa *task* lanjutan dari branch `redesign` kemarin. Tugas kali ini fokus untuk merapikan UI, memperbaiki error *critical* saat generate page, dan memoles UX (User Experience) agar makin nyaman digunakan.
+Task kali ini sangat seru, kita akan menambahkan fitur **Template** untuk halaman sales/landing page kita. Tujuannya supaya desain yang dihasilkan tidak monoton dan user bisa memilih tema visual sesuai kebutuhan mereka.
 
-Berikut adalah detail rencana kerjanya. Tolong dikerjakan secara berurutan (*step-by-step*) ya supaya gampang di-*track* dan di-*review*!
-
----
-
-## 🌍 Step 1: Translate ke Bahasa Inggris & Polishing Teks
-Kita ingin aplikasi ini terlihat lebih profesional.
-- Cek semua file komponen dan halaman (terutama di dalam `app/(dashboard)/*` dan `components/dashboard/*`).
-- Ubah **semua teks**, mulai dari placeholder input, deskripsi singkat, sapaan, pesan *error*, sampai *alert/toast* ke **Bahasa Inggris**.
-- Perbagus kalimatnya agar terdengar natural. (Contoh: "Belum ada page dibuat" -> *"You haven't created any pages yet. Let's build your first one!"*).
+Berikut adalah detail rencana kerjanya. Tolong kerjakan secara berurutan (*step-by-step*) dengan santai tapi pasti ya!
 
 ---
 
-## 🖼️ Step 2: Perbaikan Card Content
-Fokus ke komponen card halaman yang sudah di-generate (`components/dashboard/page-card.tsx`):
-1. **Thumbnail Gambar Dummy**: 
-   - Tolong **jangan pakai API Unsplash**. 
-   - Siapkan/cari gambar *dummy* sendiri yang ukurannya kecil (resolusi rendah saja agar *loading* cepat) yang temanya cocok dengan landing page/bisnis.
-   - Simpan gambar-gambar tersebut di folder `public/dummy-image/`.
-   - Panggil gambar tersebut dari folder lokal untuk dijadikan *thumbnail* di card.
-2. **Seragamkan Lebar Button**:
-   - Di dalam action card (tombol Preview, Copy Link, Publish, Delete), pastikan lebarnya seragam.
-   - Kalau sebelumnya ada yang panjang dan ada yang pendek, buat *button*-nya sama lebar agar tidak ada perbedaan, misalnya menggunakan utility class `flex-1` atau grid.
+## 🎨 Step 1: Membuat 3 Komponen Template UI
+Tugas pertama kamu adalah membuat 3 variasi desain komponen template. Komponen-komponen ini nantinya akan menerima *props*: `{ title, description, targetMarket }`. (Kamu bisa membuatnya di dalam folder `components/templates/`).
+
+Buatlah 3 tipe desain berikut:
+
+1. **Template 1 (Dark Blue Tech)**
+   - **Background**: Super gelap (gunakan Tailwind class seperti `bg-slate-950` atau `bg-zinc-950`).
+   - **Efek Visual**: Berikan sentuhan *Glassmorphism* (efek transparan dengan `backdrop-blur`).
+   - **Aksen**: Gunakan warna biru yang menyala atau *glowing* (misalnya `text-blue-500` atau `blue-600` dengan tambahan *drop shadow* terang).
+
+2. **Template 2 (Professional Clean)**
+   - **Background**: Sangat bersih, gunakan putih polos atau abu-abu sangat muda (`bg-white` atau `bg-slate-50`).
+   - **Tipografi & Desain**: Gaya minimalis, rapi, dan menggunakan font yang terlihat sangat profesional/korporat.
+   - **Aksen**: Gunakan warna *Royal Blue* (misal `text-blue-700`) untuk *highlight* elemen penting.
+
+3. **Template 3 (Modern Split)**
+   - **Layout**: Layar terbagi dua bagian (*split-screen* vertical).
+   - **Warna**: Satu sisi menggunakan warna *Solid Blue* (blok warna biru penuh), sedangkan sisi sebelahnya berwarna putih.
+   - **Tipografi**: Gunakan font dengan ketebalan ekstra (*bold/black*) agar terlihat tegas dan *edgy*.
 
 ---
 
-## 📱 Step 3: Koreksi Responsive Layout
-Ada sedikit '*bug* UI' di layar berukuran lebih kecil dari laptop (tablet/mobile):
-- Teks sapaan "Welcome" atau header konten tertutup oleh *navbar/header* menu saat di tampilan mobile.
-- Silakan koreksi dengan menambahkan `margin-top` atau `padding-top` yang cukup pada kontainer utama dashboard, sehingga konten tidak tertabrak/bersembunyi di balik navbar atas.
+## 🧭 Step 2: Integrasi ke Sidebar (Menu "Templates")
+Sekarang kita sambungkan desain tersebut ke navigasi aplikasi:
+- Buka file navigasi Sidebar kita.
+- Ketika user mengklik menu **Templates**, tampilkan halaman (atau modal) yang memuat pilihan ketiga desain template di atas.
+- **Logika Navigasi**: Jika user **memilih salah satu template**, arahkan (redirect) mereka ke halaman **Generate New Page**.
+- *Hint:* Jangan lupa bawa informasi (misal lewat URL parameter `?template=dark-tech`) agar halaman generator tahu template mana yang dipilih.
 
 ---
 
-## 🐛 Step 4: Fix Error Generate Page (Critical!)
-Ini prioritas utama! Saat ini di branch `redesign`, terjadi *error* ketika user (terutama user baru) mencoba melakukan **Generate Page**.
-- **Kemungkinan Penyebab**: Terdapat salah ketik (*typo*) atau perbedaan penamaan variabel saat proses mengambil data/menyimpan ke database (Prisma) antara versi sebelum di-redesign dengan versi sekarang.
-- **Yang harus dilakukan**:
-  - Cek kembali kode di *server action* terkait (misal di `app/actions/generate-sales-page.ts`).
-  - Pastikan penamaan variabel dan logika pengambilan nilainya (khususnya relasi ke `userId` atau `user`) sudah sesuai persis dengan struktur sebelumnya agar tidak *error*.
-  - Silakan *test* dengan akun baru sampai proses generate page sukses tanpa kendala.
+## ⚙️ Step 3: Modifikasi Alur di Halaman Generate & Dashboard
+Di tahap ini, kita mengatur apa yang terjadi saat AI selesai meng-generate konten.
 
----
+- **Skenario A: User masuk dari menu "Templates" (Memilih Template)**
+  - Di halaman *generate page*, gunakan template yang sudah dipilih user tersebut untuk menampilkan/membuat *landing page*-nya.
+  - Sesuaikan tema dan layout-nya persis dengan *style* template yang di-*request*.
+  - **Thumbnail Card**: Berikan gambar *thumbnail* secara **acak** menggunakan gambar *dummy* yang sudah tersedia di folder `public/dummy-image/`.
 
-## 🧭 Step 5: Update Sidebar
-Buka komponen `Sidebar` (`components/dashboard/sidebar.tsx`) dan lakukan penyesuaian berikut:
-1. **Pindahkan Posisi Logout**: 
-   - Pindahkan tombol/menu **Logout** posisinya menjadi **tepat di atas profil user** (jangan di paling bawah).
-   - Pastikan sudah memakai *icon* keluar (seperti icon `LogOut` dari Lucide).
-2. **Aktifkan Menu History (Riwayat)**:
-   - Jadikan menu History bisa di-klik. 
-   - Ketika di-klik, user akan diarahkan ke halaman detail History yang isinya daftar page yang sudah pernah mereka generate. (Buat file *page route*-nya jika belum ada).
-3. **Notifikasi "Request Feature" pada Setting**:
-   - Pada menu Setting (Pengaturan), modifikasi sedikit dengan memberikan indikator/notifikasi bertuliskan **"Request Feature"**.
-   - Ini bertujuan agar user tahu bahwa mereka bisa meminta fitur tambahan kepada Admin melalui bagian tersebut.
+- **Skenario B: User masuk dari menu "New Page" (Tanpa Memilih Template)**
+  - Arahkan user ke halaman *generate new page* seperti biasa.
+  - Karena user tidak memilih template, gunakan **Template Default** (kamu bebas memilih salah satu dari 3 template di atas untuk dijadikan *default*).
+  - **Thumbnail Card**: Sama seperti skenario A, gunakan gambar *thumbnail* acak dari folder `public/dummy-image/`.
 
 ---
 
 ## 💡 Tips Implementasi untuk Tim / AI:
-- **Satu per satu:** Kerjakan mulai dari Step 1 sampai Step 5. Jangan lompat-lompat ya biar lebih terstruktur.
-- **Debugging:** Untuk Step 4, gunakan `console.log()` di bagian *backend action* untuk mengecek apakah data *form* dari *client* berhasil masuk atau ada data `null` yang bikin *database* menolak eksekusi.
-- **Testing UI:** Setelah mengerjakan Step 3, jangan lupa *resize* jendela browser ke ukuran *mobile* untuk memastikan teks "Welcome" sudah benar-benar terlihat.
-- Semangat *coding*-nya! 🚀
+- **Kerjakan UI-nya dulu:** Fokus bikin 3 komponen template di Step 1 sampai *styling*-nya benar-benar kelihatan bagus. Isi dengan data *dummy* dulu nggak masalah.
+- **Simpan pilihan di Database:** Kamu mungkin perlu mengubah skema database (`prisma/schema.prisma`) untuk menambahkan *field* `templateType` pada tabel yang menyimpan data page, supaya saat page di-load di lain waktu, sistem tahu harus pakai desain yang mana.
+- **Gunakan fungsi Random:** Untuk urusan gambar *thumbnail* acak, cukup pakai fungsi `Math.random()` sederhana untuk memilih nama file dari folder `dummy-image`.
+
+Semangat *coding*-nya! Buat UI-nya sekeren mungkin ya! 🚀

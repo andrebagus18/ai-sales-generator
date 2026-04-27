@@ -1,8 +1,8 @@
 import { getServerSession } from "next-auth";
 import { notFound, redirect } from "next/navigation";
 import { authOptions } from "@/lib/auth";
-import { getOwnedSalesPageById } from "@/lib/sales-pages";
-import { PublicSalesPageView } from "@/app/p/[id]/page";
+import { TemplateRenderer } from "@/components/templates/template-renderer";
+import { PublicAIContent } from "@/components/templates/types";
 
 type PreviewPageProps = {
   params: Promise<{ id: string }>;
@@ -26,10 +26,11 @@ export default async function DraftPreviewPage({ params }: PreviewPageProps) {
       <div className="sticky top-0 z-40 border-b bg-amber-50 px-6 py-3 text-center text-sm font-medium text-amber-800">
         Private preview mode. Only you can see this page.
       </div>
-      <PublicSalesPageView
+      <TemplateRenderer
+        templateType={page.templateType}
         productName={page.productName}
         targetMarket={page.targetMarket}
-        aiContent={page.aiContent as Parameters<typeof PublicSalesPageView>[0]["aiContent"]}
+        aiContent={page.aiContent as PublicAIContent}
       />
     </div>
   );

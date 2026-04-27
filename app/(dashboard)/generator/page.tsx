@@ -2,14 +2,16 @@
 
 import { FormEvent, useMemo, useState } from "react";
 import { AnimatePresence, motion } from "framer-motion";
-import { useRouter } from "next/navigation";
+import { useSearchParams, useRouter } from "next/navigation";
 import { createSalesPageFromBrief } from "@/app/actions/generate-sales-page";
-import { Sparkles, ArrowRight, ArrowLeft, CheckCircle2 } from "lucide-react";
+import { Sparkles, ArrowRight, ArrowLeft, CheckCircle2, Layout } from "lucide-react";
 
 type Step = 1 | 2 | 3;
 
 export default function GeneratorPage() {
   const router = useRouter();
+  const searchParams = useSearchParams();
+  const selectedTemplate = searchParams.get("template") || "professional-clean";
   const [step, setStep] = useState<Step>(1);
   const [status, setStatus] = useState("");
   const [successMessage, setSuccessMessage] = useState("");
@@ -69,6 +71,7 @@ export default function GeneratorPage() {
         productName: formData.productName,
         originalDescription: formData.originalDescription,
         targetMarket: formData.targetMarket,
+        templateType: selectedTemplate,
       });
 
       setStatus("");
@@ -86,9 +89,15 @@ export default function GeneratorPage() {
 
   return (
     <div className="px-6 py-10 lg:px-10 max-w-4xl mx-auto">
-      <div className="mb-10">
-        <h1 className="text-3xl font-bold text-white mb-2">Create New Sales Page</h1>
-        <p className="text-zinc-400">Fill in the details below and let our AI do the magic.</p>
+      <div className="mb-10 flex items-center justify-between">
+        <div>
+          <h1 className="text-3xl font-bold text-white mb-2">Create New Sales Page</h1>
+          <p className="text-zinc-400">Fill in the details below and let our AI do the magic.</p>
+        </div>
+        <div className="flex items-center gap-2 px-4 py-2 rounded-xl bg-white/5 border border-white/10 text-[#04D9FF] text-xs font-bold uppercase tracking-widest">
+          <Layout size={16} />
+          {selectedTemplate.replace(/-/g, " ")}
+        </div>
       </div>
 
       <div className="relative overflow-hidden rounded-3xl border border-white/10 bg-white/5 backdrop-blur-xl p-8 lg:p-12 shadow-2xl">

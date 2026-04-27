@@ -19,6 +19,7 @@ export default async function DashboardPage() {
       isPublished: true,
       createdAt: true,
       originalDescription: true,
+      thumbnailUrl: true,
     },
   });
 

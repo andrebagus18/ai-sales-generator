@@ -62,6 +62,8 @@ model SalesPage {
   originalDescription String
   targetMarket        String
   aiContent           Json
+  templateType        String   @default("professional-clean")
+  thumbnailUrl        String?
   isPublished         Boolean  @default(false)
   createdAt           DateTime @default(now())
   updatedAt           DateTime @updatedAt

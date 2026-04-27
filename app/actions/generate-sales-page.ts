@@ -10,6 +10,7 @@ const briefSchema = z.object({
   productName: z.string().min(2),
   originalDescription: z.string().min(10),
   targetMarket: z.string().min(3),
+  templateType: z.string().optional(),
 });
 
 export type BriefInput = z.infer<typeof briefSchema>;
@@ -26,16 +27,20 @@ export async function createSalesPageFromBrief(input: BriefInput) {
   }
   try {
     console.log("Creating sales page for user:", session.user.id);
-    console.log("Input data:", parsed.data);
     
     const aiContent = await generateSalesCopy(parsed.data);
-    console.log("AI Content generated successfully");
+    
+    // Assign a random dummy thumbnail from public/dummy-image/
+    const randomNum = Math.floor(Math.random() * 3) + 1;
+    const randomThumbnail = `/dummy-image/thumb-${randomNum}.png`;
 
     const page = await prisma.salesPage.create({
       data: {
         productName: parsed.data.productName,
         originalDescription: parsed.data.originalDescription,
         targetMarket: parsed.data.targetMarket,
+        templateType: parsed.data.templateType || "professional-clean",
+        thumbnailUrl: randomThumbnail,
         aiContent,
         userId: session.user.id,
       },

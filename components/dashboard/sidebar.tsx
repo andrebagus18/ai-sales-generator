@@ -29,7 +29,7 @@ type SidebarProps = {
 const menuItems = [
   { name: "Dashboard", href: "/dashboard", icon: Home },
   { name: "New Page", href: "/generator", icon: FilePlus },
-  { name: "Templates", href: "#", icon: Layout },
+  { name: "Templates", href: "/templates", icon: Layout },
   { name: "History", href: "/history", icon: History },
   { name: "Settings", href: "#", icon: Settings, hasNotification: true },
 ];
