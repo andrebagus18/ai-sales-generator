@@ -18,16 +18,17 @@ export default async function DashboardPage() {
       productName: true,
       isPublished: true,
       createdAt: true,
+      originalDescription: true,
     },
   });
 
   return (
-    <main className="mx-auto w-full max-w-5xl px-6 py-14">
-      <div className="mb-4">
-        <h1 className="text-3xl font-semibold text-white">Dashboard</h1>
-      </div>
-      <DashboardContent pages={pages.map((page) => ({ ...page, createdAt: page.createdAt.toISOString() }))} />
-    </main>
+    <div className="px-6 py-10 lg:px-10">
+      <DashboardContent 
+        user={session.user} 
+        pages={pages.map((page) => ({ ...page, createdAt: page.createdAt.toISOString() }))} 
+      />
+    </div>
   );
 }
 
