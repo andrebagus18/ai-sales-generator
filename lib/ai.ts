@@ -41,7 +41,7 @@ export async function generateSalesCopy(input: SalesPromptInput): Promise<SalesC
   }
 
   const { text } = await generateText({
-    model: google("gemini-1.5-flash"),
+    model: google("gemini-2.5-flash"),
     prompt: `
 Create persuasive sales copy for the following product.
 
